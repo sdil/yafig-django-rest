@@ -2,7 +2,12 @@
 
 ## Implementations
 
-| Django App | Approach |
-|------------|----------|
-| API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) - Redoc style |
+| Django App | Approach | References |
+|------------|----------|------------|
+| API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) - Redoc style | Official documentation |
+| User       | Uses DRF SimpleJWT | 
 | Post       | Uses [Generic Views](https://www.django-rest-framework.org/api-guide/generic-views/) |
+
+## References
+
+- [Build user registration & authorization using SimpleJWT](https://hackernoon.com/110percent-complete-jwt-authentication-with-django-and-react-2020-iejq34ta), [Github repo](https://github.com/Toruitas/Complete-JWT-Authentication/?ref=hackernoon.com)
