@@ -5,4 +5,4 @@ WORKDIR /app
 RUN pip install django djangorestframework drf-yasg psycopg2-binary \
     dj-database-url djangorestframework-simplejwt
 COPY . .
-CMD ./manage.py migrate && ./manage.py runserver 0.0.0.0:$PORT
+CMD ./manage.py runserver 0.0.0.0:$PORT

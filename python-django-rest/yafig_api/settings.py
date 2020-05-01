@@ -75,8 +75,20 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT'),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken'),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type'
+}
+
+# Set API Doc to show JWT Authorization eventhough it's not natively support in Swagger 2.0
+# https://github.com/axnsan12/drf-yasg/issues/46
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
 }
 
 ROOT_URLCONF = 'yafig_api.urls'
@@ -104,11 +116,8 @@ WSGI_APPLICATION = 'yafig_api.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-    }
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
-
-DATABASES['default'] = dj_database_url.parse(os.environ.get("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
