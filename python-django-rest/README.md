@@ -2,10 +2,10 @@
 
 ## Implementations
 
-| Django App | Approach | References |
-|------------|----------|------------|
-| API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) - Redoc style | Official documentation |
-| User       | Uses DRF SimpleJWT | 
+| Django App | Details |
+|------------|---------|
+| API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) - Redoc style |
+| User       | Uses DRF SimpleJWT for authentication |
 | Post       | Uses [Generic Views](https://www.django-rest-framework.org/api-guide/generic-views/) |
 
 ## References

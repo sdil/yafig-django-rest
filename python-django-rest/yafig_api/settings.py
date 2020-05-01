@@ -25,7 +25,7 @@ SECRET_KEY = 'y@qt#5ioexbsbg*f5u-yi(=)6@fppi8xu10yjgi$5d8)@t)(ic'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["yafig-django.herokuapp.com"]
 
 
 # Application definition
