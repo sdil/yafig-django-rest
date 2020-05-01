@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,11 +25,13 @@ schema_view = get_schema_view(
         default_version='v1',
         description='Yet Another Free Instagram Clone API Server (Monolith)',
     ),
-    public=True
+    public=True,
+    permission_classes=(permissions.AllowAny,)
 )
 
 urlpatterns = [
     path("doc/", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),
+    path("auth/", include('authentication.urls'))
 ]
