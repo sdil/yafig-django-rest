@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
-    'authentication.apps.AuthenticationConfig',
+    'user.apps.UserConfig',
     'posts.apps.PostsConfig'
 ]
 
@@ -122,7 +122,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
-AUTH_USER_MODEL = "authentication.CustomUser"
+AUTH_USER_MODEL = "user.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
