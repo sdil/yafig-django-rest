@@ -18,6 +18,7 @@ from django.urls import path, include, re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from rest_framework_simplejwt import views as jwt_views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,5 +34,6 @@ urlpatterns = [
     path("doc/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),
-    path("user/", include('user.urls'))
+    path("user/", include('user.urls')),
+    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
 ]
