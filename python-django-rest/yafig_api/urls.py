@@ -35,5 +35,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),
     path("user/", include('user.urls')),
-    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
 ]

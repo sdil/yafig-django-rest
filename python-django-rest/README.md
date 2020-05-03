@@ -7,6 +7,7 @@
 | API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) - Redoc style |
 | User       | Uses DRF SimpleJWT for authentication |
 | Post       | Uses [Generic Views](https://www.django-rest-framework.org/api-guide/generic-views/) |
+| Search     | Uses bare request handler |
 
 ## References
 

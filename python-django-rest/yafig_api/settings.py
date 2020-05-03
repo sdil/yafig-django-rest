@@ -72,7 +72,7 @@ SIMPLE_JWT = {
     'ALGORITHM': "HS256",
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('JWT'),
+    'AUTH_HEADER_TYPES': ('Bearer'),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
@@ -82,6 +82,7 @@ SIMPLE_JWT = {
 # Set API Doc to show JWT Authorization eventhough it's not natively support in Swagger 2.0
 # https://github.com/axnsan12/drf-yasg/issues/46
 SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
     'SECURITY_DEFINITIONS': {
         'Bearer': {
             'type': 'apiKey',
