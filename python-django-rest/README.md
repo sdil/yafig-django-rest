@@ -12,3 +12,4 @@
 ## References
 
 - [Build user registration & authorization using SimpleJWT](https://hackernoon.com/110percent-complete-jwt-authentication-with-django-and-react-2020-iejq34ta), [Github repo](https://github.com/Toruitas/Complete-JWT-Authentication/?ref=hackernoon.com)
+- [Django REST OpenAPI 3 Support](https://djangoadventures.com/django-rest-framework-openapi-3-support/)

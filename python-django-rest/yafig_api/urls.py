@@ -19,6 +19,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
+from rest_framework.schemas import get_schema_view as drf_schema_view
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -30,8 +31,14 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,)
 )
 
+drf_schema_view = drf_schema_view(
+    title='YAFIG API',
+    public=True,
+    permission_classes=(permissions.AllowAny,))
+
 urlpatterns = [
     path("doc/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-redoc'),
+    path('schema/', drf_schema_view),
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),
     path("user/", include('user.urls')),
