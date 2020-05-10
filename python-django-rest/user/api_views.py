@@ -58,12 +58,13 @@ class CustomObtainTokenPairWithView(TokenObtainPairView):
     operation_description="apiview post description override",
     request_body=Schema(
         type=TYPE_OBJECT,
-        required=['username'],
+        required=['username', 'password'],
         properties={
-            'username': Schema(type=TYPE_STRING)
+            'username': Schema(type=TYPE_STRING),
+            'password': Schema(type=TYPE_STRING)
         },
     ),
-    security=[]
+    responses={200: UserSerializer}
 )
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
@@ -72,6 +73,5 @@ def register(request):
     Register a new user and return it's details
     """
     serializer_class = UserSerializer
-    print(request.data)
     user = User.objects.create_user(request.data['username'], password=request.data['password'])
     return Response(UserSerializer(user).data)

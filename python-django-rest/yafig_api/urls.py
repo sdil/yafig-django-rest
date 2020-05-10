@@ -34,7 +34,8 @@ schema_view = get_schema_view(
 drf_schema_view = drf_schema_view(
     title='YAFIG API',
     public=True,
-    permission_classes=(permissions.AllowAny,))
+    permission_classes=(permissions.AllowAny,)
+)
 
 urlpatterns = [
     path("doc/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-redoc'),

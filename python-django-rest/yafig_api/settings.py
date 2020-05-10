@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import dj_database_url
 from datetime import timedelta
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,6 +83,7 @@ SIMPLE_JWT = {
 # Set API Doc to show JWT Authorization eventhough it's not natively support in Swagger 2.0
 # https://github.com/axnsan12/drf-yasg/issues/46
 SWAGGER_SETTINGS = {
+    'PERSIST_AUTH': True,
     'USE_SESSION_AUTH': False,
     'SECURITY_DEFINITIONS': {
         'Bearer': {
@@ -91,6 +93,9 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ROOT_URLCONF = 'yafig_api.urls'
 

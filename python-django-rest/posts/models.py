@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import JSONField
 
 class Post(models.Model):
     caption = models.TextField()
+    image = models.ImageField(blank=True, null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(blank=True, max_length=120)
     tags = JSONField(null=True, blank=True)
