@@ -1,0 +1,26 @@
+version: '2.0'
+services:
+  web:
+    build: .
+    ports:
+    - "8000:8000"
+    links:
+    - postgresql
+    environment:
+      DATABASE_URL: "postgres://postgres:password@postgresql/yafig"
+      PORT: 8000
+    command: 
+    - /bin/bash 
+    - -c 
+    - | 
+      python manage.py migrate
+      python manage.py runserver 0.0.0.0:8000
+    
+  postgresql:
+    image: postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres  
+      POSTGRES_DB: yafig
