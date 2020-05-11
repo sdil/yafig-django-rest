@@ -1,5 +1,8 @@
 run-local:
 	docker run -it -v $(shell pwd):/app --env PORT=8000 -p 8000:8000 --env DATABASE_URL=$(DB_URL) registry.heroku.com/yafig-django/web
+	
+make-migrations:
+	docker run -it -v $(shell pwd):/app --env PORT=8000 -p 8000:8000 --env DATABASE_URL=$(DB_URL) registry.heroku.com/yafig-django/web ./manage.py makemigrations
 
 build-local:
 	docker build -t registry.heroku.com/yafig-django/web .
