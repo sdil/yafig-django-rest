@@ -8,7 +8,7 @@ from django.http import Http404
 from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, schema ,permission_classes
-from drf_yasg.openapi import IN_BODY, IN_PATH, Parameter, Schema, TYPE_STRING, TYPE_OBJECT
+from drf_yasg.openapi import IN_HEADER, Parameter, Schema, TYPE_STRING, TYPE_OBJECT, FORMAT_EMAIL, FORMAT_PASSWORD
 import logging
 
 logger = logging.getLogger(__name__)
@@ -57,13 +57,13 @@ class CustomObtainTokenPairWithView(TokenObtainPairView):
 # https://github.com/axnsan12/drf-yasg/issues/280    
 @swagger_auto_schema(
     method='post',
-    operation_description="apiview post description override",
+    operation_description="User registration",
     request_body=Schema(
         type=TYPE_OBJECT,
         required=['username', 'password'],
         properties={
-            'username': Schema(type=TYPE_STRING),
-            'password': Schema(type=TYPE_STRING)
+            'username': Schema(type=TYPE_STRING, format=FORMAT_EMAIL),
+            'password': Schema(type=TYPE_STRING, format=FORMAT_PASSWORD)
         },
     ),
     responses={200: UserSerializer}
@@ -74,10 +74,17 @@ def register(request):
     """
     Register a new user and return it's details
     """
-    serializer_class = UserSerializer
     user = User.objects.create_user(request.data['username'], password=request.data['password'])
     return Response(UserSerializer(user).data)
 
+@swagger_auto_schema(
+    method='get',
+    operation_description="User authenticate",
+    manual_parameters=[
+        Parameter('Authorization', IN_HEADER, description="JWT Token of current user", type=TYPE_STRING)
+    ],
+    responses={200: UserSerializer}
+)
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated,])
 def get_current_user(request):

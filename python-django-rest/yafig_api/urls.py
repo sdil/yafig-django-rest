@@ -42,5 +42,5 @@ urlpatterns = [
     path('schema/', drf_schema_view),
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),
-    path("user/", include('user.urls')),
+    path("users/", include('user.urls')),
 ]
