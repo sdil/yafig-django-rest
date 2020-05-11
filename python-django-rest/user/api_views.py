@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,6 +9,9 @@ from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, schema ,permission_classes
 from drf_yasg.openapi import IN_BODY, IN_PATH, Parameter, Schema, TYPE_STRING, TYPE_OBJECT
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 class UserDetail(APIView):
@@ -67,7 +69,7 @@ class CustomObtainTokenPairWithView(TokenObtainPairView):
     responses={200: UserSerializer}
 )
 @api_view(['POST'])
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.AllowAny,])
 def register(request):
     """
     Register a new user and return it's details
@@ -75,3 +77,14 @@ def register(request):
     serializer_class = UserSerializer
     user = User.objects.create_user(request.data['username'], password=request.data['password'])
     return Response(UserSerializer(user).data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated,])
+def get_current_user(request):
+    """
+    Authenticate current user and return his/her details
+    """
+    current_user = UserSerializer(request.user)
+    logger.info(f"Authenticating current user {request.user.username}")
+
+    return Response(current_user.data)
