@@ -15,7 +15,18 @@ class PostListCreateAPIView(ListCreateAPIView):
     serializer_class = PostSerializer
     # MultiPart handle files upload using Form Data format
     parser_classes = (MultiPartParser,)
-    queryset = Post.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the posts
+        for the currently authenticated user.
+        """
+        current_user = self.request.user
+        return Post.objects.filter(posted_by=current_user)
+
+    def perform_create(self, serializer):
+        # Assign the owner of the image to the current user
+        serializer.save(posted_by=self.request.user)
 
 class CommentListCreateAPIView(ListCreateAPIView):
     """
