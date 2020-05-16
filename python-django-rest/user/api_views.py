@@ -56,14 +56,14 @@ class UserPosts(APIView):
     permission_classes = [permissions.IsAuthenticated]
     @swagger_auto_schema(
         operation_description="Get user's posts",
-        responses={200: PostSerializer}
+        responses={200: PostSerializer(many=True)}
     )
     def get(self, request, username, format=None):
         try:
-            user = User.objects.get(username=username)
+            posts = Post.objects.filter(posted_by=username)
         except User.DoesNotExist:
             raise Http404
-        serializer = UserSerializer(user)
+        serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
 class CustomObtainTokenPairWithView(TokenObtainPairView):
