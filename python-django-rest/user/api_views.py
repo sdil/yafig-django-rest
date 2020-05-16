@@ -1,4 +1,6 @@
 from .models import User
+from posts.models import Post
+from posts.serializers import PostSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -25,6 +27,10 @@ class UserDetail(APIView):
     """
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    @swagger_auto_schema(
+        operation_description="Get user details",
+        responses={200: UserSerializer}
+    )
     def get(self, request, username, format=None):
         try:
             user = User.objects.get(username=username)
@@ -34,11 +40,25 @@ class UserDetail(APIView):
         return Response(serializer.data)
 
     @swagger_auto_schema(
-        operation_description="apiview post description override",
+        operation_description="Update user details",
         request_body=UserSerializer,
-        security=[]
+        responses={200: UserSerializer}
     )
     def post(self, request, username, format=None):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+class UserPosts(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    @swagger_auto_schema(
+        operation_description="Get user's posts",
+        responses={200: PostSerializer}
+    )
+    def get(self, request, username, format=None):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
