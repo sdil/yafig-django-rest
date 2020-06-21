@@ -3,26 +3,30 @@ services:
   web:
     build: .
     ports:
-    - "8000:8000"
+      - '8000:8000'
     links:
-    - postgresql
+      - postgresql
     environment:
-      DATABASE_URL: "postgres://postgres:password@postgresql/yafig"
+      DATABASE_URL: 'postgres://postgres:password@postgresql/yafig'
       PORT: 8000
-    command: 
-    - /bin/bash 
-    - -c 
-    - | 
-      python manage.py migrate
-      python manage.py runserver 0.0.0.0:8000
+      SENTRY_URL: 'https://secret.ingest.sentry.io/secret'
+    command:
+      - /bin/bash
+      - '-c'
+      - |
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
     volumes:
-    - ./:/app
-    
+      - './:/app'
   postgresql:
     image: postgres
     ports:
-    - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres  
+      POSTGRES_USER: postgres
       POSTGRES_DB: yafig
+  redis:
+    image: redis
+  elasticsearch:
+    image: elasticsearch

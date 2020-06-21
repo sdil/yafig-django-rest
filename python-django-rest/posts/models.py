@@ -2,12 +2,17 @@ from django.db import models
 from user.models import User
 from django.contrib.postgres.fields import JSONField
 
+def upload_image_to(instance, filename):
+    return 'posts/%s' % (
+        instance.id
+    )
+
 class Post(models.Model):
     caption = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to=upload_image_to, null=True, blank=True)
     posted_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(blank=True, max_length=120)
-    tags = JSONField(null=True, blank=True)
+    tags = JSONField(null=True, blank=True) # <---- Use ArrayField instead!
     posted_by = models.ForeignKey(
         User,
         on_delete=models.DO_NOTHING,

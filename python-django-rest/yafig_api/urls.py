@@ -21,11 +21,14 @@ from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework.schemas import get_schema_view as drf_schema_view
 
+API_DOC_TITLE = "YAFIG API Server"
+API_DOC_DESCRIPTION = "Yet Another Free Instagram Clone API Server (Monolith)"
+
 schema_view = get_schema_view(
     openapi.Info(
-        title="YAFIG API Server",
+        title=API_DOC_TITLE,
         default_version='v1',
-        description='Yet Another Free Instagram Clone API Server (Monolith)',
+        description=API_DOC_DESCRIPTION,
     ),
     public=True,
     permission_classes=(permissions.AllowAny,)
@@ -37,8 +40,18 @@ drf_schema_view = drf_schema_view(
     permission_classes=(permissions.AllowAny,)
 )
 
+from rest_framework.documentation import include_docs_urls
+
+from rest_framework.renderers import DocumentationRenderer
+
+
+class CustomRenderer(DocumentationRenderer):
+    languages = ['ruby', 'go']
+
+
 urlpatterns = [
     path("doc/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-redoc'),
+    path('docs/', include_docs_urls(title=API_DOC_TITLE, description=API_DOC_DESCRIPTION, permission_classes=(permissions.AllowAny,))),
     path('schema/', drf_schema_view),
     path('admin/', admin.site.urls),
     path("posts/", include("posts.urls")),

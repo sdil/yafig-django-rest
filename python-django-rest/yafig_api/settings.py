@@ -14,6 +14,8 @@ import os
 import dj_database_url
 from datetime import timedelta
 from django.urls import reverse_lazy
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,7 +46,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'user.apps.UserConfig',
     'posts.apps.PostsConfig',
-    'corsheaders'
+    'corsheaders',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +72,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 SIMPLE_JWT = {
@@ -188,3 +192,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_URL", "https://placeholder-sentry-url.com"),
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_QUERYSTRING_AUTH = False # don't add complex authentication-related query parameters for requests
+
+AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", "123")
+AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY", "123")
+AWS_STORAGE_BUCKET_NAME = 'yafig-monolith.posts'
+AWS_AUTO_CREATE_BUCKET = True
