@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from posts.models import Post, Comment
 import logging
+
+from rest_framework import serializers
+
+from posts.models import Comment, Post
 
 logger = logging.getLogger(__name__)
 

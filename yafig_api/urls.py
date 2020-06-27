@@ -14,12 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
-from drf_yasg.views import get_schema_view
+from django.urls import include, path, re_path
 from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework_simplejwt import views as jwt_views
+from rest_framework.documentation import include_docs_urls
+from rest_framework.renderers import DocumentationRenderer
 from rest_framework.schemas import get_schema_view as drf_schema_view
+
+from rest_framework_simplejwt import views as jwt_views
 
 API_DOC_TITLE = "YAFIG API Server"
 API_DOC_DESCRIPTION = "Yet Another Free Instagram Clone API Server (Monolith)"
@@ -40,9 +43,7 @@ drf_schema_view = drf_schema_view(
     permission_classes=(permissions.AllowAny,)
 )
 
-from rest_framework.documentation import include_docs_urls
 
-from rest_framework.renderers import DocumentationRenderer
 
 
 class CustomRenderer(DocumentationRenderer):

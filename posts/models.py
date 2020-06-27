@@ -1,6 +1,8 @@
-from django.db import models
-from user.models import User
 from django.contrib.postgres.fields import JSONField
+from django.db import models
+
+from user.models import User
+
 
 def upload_image_to(instance, filename):
     return 'posts/%s' % (

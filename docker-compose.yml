@@ -6,6 +6,10 @@ services:
       - '8000:8000'
     links:
       - postgresql
+      - redis
+      - elasticsearch
+      - rabbitmq
+      - celery
     environment:
       DATABASE_URL: 'postgres://postgres:password@postgresql/yafig'
       PORT: 8000
@@ -30,3 +34,7 @@ services:
     image: redis
   elasticsearch:
     image: elasticsearch
+  rabbitmq:
+    image: rabbitmq
+  celery:
+    image: celery

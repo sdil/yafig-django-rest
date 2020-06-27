@@ -1,9 +1,11 @@
+import logging
+
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.parsers import MultiPartParser
-import logging
-from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer
 from rest_framework.response import Response
+
+from .models import Comment, Post
+from .serializers import CommentSerializer, PostSerializer
 
 logger = logging.getLogger(__name__)
 

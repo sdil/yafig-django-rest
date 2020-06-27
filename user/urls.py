@@ -1,7 +1,8 @@
 from django.urls import path
-from user import api_views
 from rest_framework import permissions
+
 from rest_framework_simplejwt import views as jwt_views
+from user import api_views
 
 urlpatterns = [
     path('', api_views.get_current_user, name="get-current-user"),

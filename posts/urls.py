@@ -1,5 +1,6 @@
 from django.urls import path
-from .api_views import PostListCreateAPIView, CommentListCreateAPIView
+
+from .api_views import CommentListCreateAPIView, PostListCreateAPIView
 
 urlpatterns = [
     path('', PostListCreateAPIView.as_view(), name = 'post-list-create'),

@@ -1,17 +1,20 @@
-from .models import User
+import logging
+
+from django.http import Http404
+from drf_yasg.openapi import (FORMAT_EMAIL, FORMAT_PASSWORD, IN_HEADER,
+                              TYPE_OBJECT, TYPE_STRING, Parameter, Schema)
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view, permission_classes, schema
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from posts.models import Post
 from posts.serializers import PostSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import UserSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.http import Http404
-from rest_framework import permissions
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view, schema ,permission_classes
-from drf_yasg.openapi import IN_HEADER, Parameter, Schema, TYPE_STRING, TYPE_OBJECT, FORMAT_EMAIL, FORMAT_PASSWORD
-import logging
+
+from .models import User
+from .serializers import CustomTokenObtainPairSerializer, UserSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +22,7 @@ logger = logging.getLogger(__name__)
 class UserDetail(APIView):
     """
     get:
-    Get current user. 
+    Get current user.
     This API resources use API View.
 
     post:
@@ -31,7 +34,7 @@ class UserDetail(APIView):
         operation_description="Get user details",
         responses={200: UserSerializer}
     )
-    def get(self, request, username, format=None):
+    def get(self, request, username):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -44,7 +47,7 @@ class UserDetail(APIView):
         request_body=UserSerializer,
         responses={200: UserSerializer}
     )
-    def post(self, request, username, format=None):
+    def post(self, request, username):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -58,7 +61,7 @@ class UserPosts(APIView):
         operation_description="Get user's posts",
         responses={200: PostSerializer(many=True)}
     )
-    def get(self, request, username, format=None):
+    def get(self, request, username):
         try:
             posts = Post.objects.filter(posted_by=username)
         except User.DoesNotExist:
