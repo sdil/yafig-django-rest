@@ -10,10 +10,11 @@ from drf_yasg.openapi import (
     TYPE_STRING,
     Parameter,
     Schema,
+    Response as openapi_response,
 )
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view, permission_classes, schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -49,22 +50,39 @@ class UserDetail(APIView):
         return Response(serializer.data)
 
     @swagger_auto_schema(
-        operation_description="Update user details",
+        operation_description="Update user details. Can only update own user.",
         request_body=UserSerializer,
         responses={200: UserSerializer},
     )
     def post(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise Http404
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        # Only can delete yourself
+        if request.user.username == username:
+            user = get_object_or_404(User, username=username)
+            serializer = UserSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            raise PermissionDenied(
+                {"message": "You do not have permission to update this user"}
+            )
 
     @swagger_auto_schema(
         operation_description="Delete user. The user can only delete himself.",
         request_body=UserSerializer,
-        responses={200: UserSerializer},
+        responses={
+            200: openapi_response(
+                "Successful user deletion",
+                Schema(
+                    type=TYPE_OBJECT,
+                    required=["username", "password"],
+                    properties={
+                        "status": Schema(type=TYPE_STRING)
+                    },
+                ),
+            )
+        },
     )
     def delete(self, request, username):
         # Only can delete yourself
@@ -88,10 +106,8 @@ class UserPosts(APIView):
         responses={200: PostSerializer(many=True)},
     )
     def get(self, request, username):
-        try:
-            posts = Post.objects.filter(posted_by=username)
-        except User.DoesNotExist:
-            raise Http404
+        user = get_object_or_404(User, username=username)
+        posts = get_list_or_404(Post, posted_by=user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
