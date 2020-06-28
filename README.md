@@ -9,6 +9,10 @@
 | Post       | Uses [Generic Views](https://www.django-rest-framework.org/api-guide/generic-views/) |
 | Search     | Uses bare request handler |
 
+# AWS Setup
+
+- Setup minimal S3 permission with [this policy permission](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#iam-policy).
+
 ## Wishlist
 
 - Celery & Celery Beatx

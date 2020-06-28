@@ -2,21 +2,23 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from user.models import User
+from uuid import uuid4
 
 
 def upload_image_to(instance, filename):
-    return instance.id
+    ext = filename.split(".")[-1]
+    return f"{uuid4().hex}.{ext}"
 
 
 class Post(models.Model):
     caption = models.TextField()
-    image = models.ImageField(null=True, blank=True)
     posted_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(blank=True, max_length=120)
     tags = JSONField(null=True, blank=True)  # <---- Use ArrayField instead!
     posted_by = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, blank=True, null=True
     )
+    image = models.ImageField(upload_to=upload_image_to, null=True, blank=True)
 
 
 class Comment(models.Model):
