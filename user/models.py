@@ -1,10 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
 
-
-class User(AbstractUser):
+class User(SafeDeleteModel):
     status = models.CharField(default="PENDING", blank=True, max_length=120)
     followers_count = models.IntegerField(default=0)
     following_count = models.IntegerField(default=0)

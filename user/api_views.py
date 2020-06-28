@@ -1,10 +1,19 @@
 import logging
 
 from django.http import Http404
-from drf_yasg.openapi import (FORMAT_EMAIL, FORMAT_PASSWORD, IN_HEADER,
-                              TYPE_OBJECT, TYPE_STRING, Parameter, Schema)
+from rest_framework.exceptions import PermissionDenied
+from drf_yasg.openapi import (
+    FORMAT_EMAIL,
+    FORMAT_PASSWORD,
+    IN_HEADER,
+    TYPE_OBJECT,
+    TYPE_STRING,
+    Parameter,
+    Schema,
+)
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes, schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,7 +27,7 @@ from .serializers import CustomTokenObtainPairSerializer, UserSerializer
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
+
 class UserDetail(APIView):
     """
     get:
@@ -35,10 +44,7 @@ class UserDetail(APIView):
         operation_description="Get user details", responses={200: UserSerializer}
     )
     def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise Http404
+        user = get_object_or_404(User, username=username)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
@@ -54,6 +60,24 @@ class UserDetail(APIView):
             raise Http404
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
+    @swagger_auto_schema(
+        operation_description="Delete user. The user can only delete himself.",
+        request_body=UserSerializer,
+        responses={200: UserSerializer},
+    )
+    def delete(self, request, username):
+        # Only can delete yourself
+        if request.user.username == username:
+            user = get_object_or_404(User, pk=request.user.id)
+            user.status = "DELETED"
+            user.is_active = False
+            user.save()
+            return Response({"status": "OK"})
+        else:
+            raise PermissionDenied(
+                {"message": "You do not have permission to delete this user"}
+            )
 
 
 class UserPosts(APIView):

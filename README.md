@@ -5,7 +5,7 @@
 | Django App | Details |
 |------------|---------|
 | API Doc    | [DRF YASG](https://drf-yasg.readthedocs.io/en/stable/) |
-| User       | Uses DRF APIView & SimpleJWT library for authentication. |
+| User       | Uses DRF class-based APIView & SimpleJWT library for authentication. |
 | Post       | Uses [Generic Views](https://www.django-rest-framework.org/api-guide/generic-views/) |
 | Search     | Uses bare request handler |
 
@@ -39,6 +39,7 @@
 - [Django REST OpenAPI 3 Support](https://djangoadventures.com/django-rest-framework-openapi-3-support/)
 - [Build File/Image upload in DRF](https://www.techiediaries.com/django-rest-image-file-upload-tutorial/)
 - [Upload files to S3 using DRF](https://stackoverflow.com/questions/46195181/upload-file-to-s3-using-drf)
+- [Soft Deletion in Django](https://adriennedomingus.com/blog/soft-deletion-in-django)
 
 ## Conferences
 
