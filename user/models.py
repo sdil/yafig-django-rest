@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class User(AbstractUser):
     status = models.CharField(default="PENDING", blank=True, max_length=120)
     followers_count = models.IntegerField(default=0)

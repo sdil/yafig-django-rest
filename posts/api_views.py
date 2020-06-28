@@ -9,11 +9,13 @@ from .serializers import CommentSerializer, PostSerializer
 
 logger = logging.getLogger(__name__)
 
+
 class PostListCreateAPIView(ListCreateAPIView):
     """
     ListCreateAPI accepts both GET and POST request
     Refer here: https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
     """
+
     serializer_class = PostSerializer
     # MultiPart handle files upload using Form Data format
     parser_classes = (MultiPartParser,)
@@ -30,10 +32,12 @@ class PostListCreateAPIView(ListCreateAPIView):
         # Assign the owner of the image to the current user
         serializer.save(posted_by=self.request.user)
 
+
 class CommentListCreateAPIView(ListCreateAPIView):
     """
     ListCreateAPI accepts both GET and POST request
     Refer here: https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
     """
+
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()

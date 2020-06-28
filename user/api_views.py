@@ -1,8 +1,15 @@
 import logging
 
 from django.http import Http404
-from drf_yasg.openapi import (FORMAT_EMAIL, FORMAT_PASSWORD, IN_HEADER,
-                              TYPE_OBJECT, TYPE_STRING, Parameter, Schema)
+from drf_yasg.openapi import (
+    FORMAT_EMAIL,
+    FORMAT_PASSWORD,
+    IN_HEADER,
+    TYPE_OBJECT,
+    TYPE_STRING,
+    Parameter,
+    Schema,
+)
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes, schema
@@ -30,9 +37,9 @@ class UserDetail(APIView):
     """
 
     permission_classes = [permissions.IsAuthenticated]
+
     @swagger_auto_schema(
-        operation_description="Get user details",
-        responses={200: UserSerializer}
+        operation_description="Get user details", responses={200: UserSerializer}
     )
     def get(self, request, username):
         try:
@@ -45,7 +52,7 @@ class UserDetail(APIView):
     @swagger_auto_schema(
         operation_description="Update user details",
         request_body=UserSerializer,
-        responses={200: UserSerializer}
+        responses={200: UserSerializer},
     )
     def post(self, request, username):
         try:
@@ -55,11 +62,13 @@ class UserDetail(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+
 class UserPosts(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
     @swagger_auto_schema(
         operation_description="Get user's posts",
-        responses={200: PostSerializer(many=True)}
+        responses={200: PostSerializer(many=True)},
     )
     def get(self, request, username):
         try:
@@ -69,47 +78,61 @@ class UserPosts(APIView):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
+
 class CustomObtainTokenPairWithView(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = CustomTokenObtainPairSerializer
+
 
 # More documentation here
 # https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema
 # https://drf-yasg.readthedocs.io/en/stable/custom_spec.html#serializer-meta-nested-class
 # https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.openapi.Parameter
-# https://github.com/axnsan12/drf-yasg/issues/280    
+# https://github.com/axnsan12/drf-yasg/issues/280
 @swagger_auto_schema(
-    method='post',
+    method="post",
     operation_description="User registration",
     request_body=Schema(
         type=TYPE_OBJECT,
-        required=['username', 'password'],
+        required=["username", "password"],
         properties={
-            'username': Schema(type=TYPE_STRING, format=FORMAT_EMAIL),
-            'password': Schema(type=TYPE_STRING, format=FORMAT_PASSWORD)
+            "username": Schema(type=TYPE_STRING, format=FORMAT_EMAIL),
+            "password": Schema(type=TYPE_STRING, format=FORMAT_PASSWORD),
         },
     ),
-    responses={200: UserSerializer}
+    responses={200: UserSerializer},
 )
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny,])
+@api_view(["POST"])
+@permission_classes(
+    [permissions.AllowAny,]
+)
 def register(request):
     """
     Register a new user and return it's details
     """
-    user = User.objects.create_user(request.data['username'], password=request.data['password'])
+    user = User.objects.create_user(
+        request.data["username"], password=request.data["password"]
+    )
     return Response(UserSerializer(user).data)
 
+
 @swagger_auto_schema(
-    method='get',
+    method="get",
     operation_description="User authenticate",
     manual_parameters=[
-        Parameter('Authorization', IN_HEADER, description="JWT Token of current user", type=TYPE_STRING)
+        Parameter(
+            "Authorization",
+            IN_HEADER,
+            description="JWT Token of current user",
+            type=TYPE_STRING,
+        )
     ],
-    responses={200: UserSerializer}
+    responses={200: UserSerializer},
 )
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated,])
+@api_view(["GET"])
+@permission_classes(
+    [permissions.IsAuthenticated,]
+)
 def get_current_user(request):
     """
     Authenticate current user and return his/her details

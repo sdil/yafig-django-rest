@@ -6,10 +6,12 @@ from posts.models import Comment, Post
 
 logger = logging.getLogger(__name__)
 
+
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = "__all__"
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

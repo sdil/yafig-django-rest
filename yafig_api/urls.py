@@ -29,32 +29,33 @@ API_DOC_DESCRIPTION = "Yet Another Free Instagram Clone API Server (Monolith)"
 
 schema_view = get_schema_view(
     openapi.Info(
-        title=API_DOC_TITLE,
-        default_version='v1',
-        description=API_DOC_DESCRIPTION,
+        title=API_DOC_TITLE, default_version="v1", description=API_DOC_DESCRIPTION,
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,)
+    permission_classes=(permissions.AllowAny,),
 )
 
 drf_schema_view = drf_schema_view(
-    title='YAFIG API',
-    public=True,
-    permission_classes=(permissions.AllowAny,)
+    title="YAFIG API", public=True, permission_classes=(permissions.AllowAny,)
 )
 
 
-
-
 class CustomRenderer(DocumentationRenderer):
-    languages = ['ruby', 'go']
+    languages = ["ruby", "go"]
 
 
 urlpatterns = [
-    path("doc/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-redoc'),
-    path('docs/', include_docs_urls(title=API_DOC_TITLE, description=API_DOC_DESCRIPTION, permission_classes=(permissions.AllowAny,))),
-    path('schema/', drf_schema_view),
-    path('admin/', admin.site.urls),
+    path("doc/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-redoc"),
+    path(
+        "docs/",
+        include_docs_urls(
+            title=API_DOC_TITLE,
+            description=API_DOC_DESCRIPTION,
+            permission_classes=(permissions.AllowAny,),
+        ),
+    ),
+    path("schema/", drf_schema_view),
+    path("admin/", admin.site.urls),
     path("posts/", include("posts.urls")),
-    path("users/", include('user.urls')),
+    path("users/", include("user.urls")),
 ]
