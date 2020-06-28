@@ -7,13 +7,13 @@ services:
     links:
       - postgresql
       - redis
-      - elasticsearch
       - rabbitmq
       - celery
+      - elasticsearch
     environment:
-      DATABASE_URL: 'postgres://postgres:password@postgresql/yafig'
       PORT: 8000
-      SENTRY_URL: 'https://secret.ingest.sentry.io/secret'
+    env_file:
+      - prod.env
     command:
       - /bin/bash
       - '-c'
@@ -32,9 +32,9 @@ services:
       POSTGRES_DB: yafig
   redis:
     image: redis
-  elasticsearch:
-    image: elasticsearch
   rabbitmq:
     image: rabbitmq
   celery:
     image: celery
+  elasticsearch:
+          image: elasticsearch:6.8.10

@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y@qt#5ioexbsbg*f5u-yi(=)6@fppi8xu10yjgi$5d8)@t)(ic'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["yafig-django.herokuapp.com", "localhost"]
 
@@ -204,10 +204,10 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_QUERYSTRING_AUTH = False # don't add complex authentication-related query parameters for requests
+AWS_S3_SECURE_URLS = True
 
 AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", "123")
 AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY", "123")
-AWS_STORAGE_BUCKET_NAME = 'yafig-monolith.posts'
-AWS_AUTO_CREATE_BUCKET = True
+AWS_STORAGE_BUCKET_NAME = 'yafig-monolith-images'
