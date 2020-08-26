@@ -41,6 +41,8 @@ Some parts of this system are not implemented consistently. For example, you wil
 
 ### Resources
 
+These resources design is influenced by [Microsoft API Design guidance](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
+
 #### User Resource
 
 | Resource | POST | GET | PUT | DELETE |
@@ -106,7 +108,7 @@ The page will have the following paths:
 4. Feed page at `/feed` path
 5. Post CRUD pages at `/p/{id}` path
 6. User CRUD pages at `/u/{id}` path
-7. Profile page at `/me` path
+7. Profile page at `/u/{own id}` path
 8. Search page at `/search` path
 
 Frontend specs:

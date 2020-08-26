@@ -16,9 +16,4 @@ class Migration(migrations.Migration):
             name='image',
             field=models.ImageField(blank=True, null=True, upload_to=''),
         ),
-        migrations.AddField(
-            model_name='post',
-            name='tags',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
-        ),
     ]

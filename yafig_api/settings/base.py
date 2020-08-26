@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["yafig-django.herokuapp.com", "localhost", "monolith-sdil.cloud.okteto.net", "yafig-monolith.fly.dev"]
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -180,13 +180,13 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-sentry_sdk.init(
-    dsn=os.environ.get("SENTRY_URL", "https://placeholder-sentry-url.com"),
-    integrations=[DjangoIntegration()],
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
-)
+# sentry_sdk.init(
+#     dsn=os.environ.get("SENTRY_URL", "https://placeholder-sentry-url.com"),
+#     integrations=[DjangoIntegration()],
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True,
+# )
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_QUERYSTRING_AUTH = (
