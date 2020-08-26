@@ -18,8 +18,8 @@ services:
       - /bin/bash
       - '-c'
       - |
-        python manage.py migrate --settings=yafig_api.settings.prod
-        python manage.py runserver 0.0.0.0:8000 --settings=yafig_api.settings.prod
+        python manage.py migrate --settings=yafig_api.settings.dev
+        python manage.py runserver 0.0.0.0:8000 --settings=yafig_api.settings.dev
     volumes:
       - './:/app'
   postgresql:
