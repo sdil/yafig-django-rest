@@ -5,6 +5,6 @@ WORKDIR /app
 RUN pip install django djangorestframework drf-yasg psycopg2-binary \
     dj-database-url djangorestframework-simplejwt pyyaml \ 
     Pillow django-cors-headers sentry-sdk django-storages coreapi boto3 \
-    whitenoise
+    whitenoise gunicorn
 COPY . .
-CMD ./manage.py runserver 0.0.0.0:$PORT
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "yafig_api.wsgi:application"]

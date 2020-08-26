@@ -55,7 +55,7 @@ class UserDetail(APIView):
         responses={200: UserSerializer},
     )
     def post(self, request, username):
-        # Only can delete yourself
+        # Only can update yourself
         if request.user.username == username:
             user = get_object_or_404(User, username=username)
             serializer = UserSerializer(user, data=request.data)

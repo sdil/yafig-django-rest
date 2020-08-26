@@ -12,5 +12,7 @@ urlpatterns = [
     path("<str:username>/", api_views.UserDetail.as_view(), name="get-user-detail"),
     path("<str:username>/posts/", api_views.UserPosts.as_view(), name="user-post-list"),
     # path('follow/<str:username>/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    # path('unfollow/<str:username>/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
     # path('block/<str:username>/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    # path('unblock/<str:username>/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
 ]

@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["yafig-django.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["yafig-django.herokuapp.com", "localhost", "monolith-sdil.cloud.okteto.net", "yafig-monolith.fly.dev"]
 
 
 # Application definition
