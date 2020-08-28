@@ -194,6 +194,6 @@ AWS_QUERYSTRING_AUTH = (
 )
 AWS_S3_SECURE_URLS = True
 
-AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", "123")
-AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY", "123")
-AWS_STORAGE_BUCKET_NAME = "yafig-monolith-images"
+AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", "access id")
+AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY", "secret key")
+AWS_STORAGE_BUCKET_NAME = "yafig-django-rest-upload-dev"

@@ -30,7 +30,7 @@
         <template slot="end" v-if="isAuthenticated">
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <nuxt-link to="/me">
+                    <nuxt-link :to="'/u/' + this.$auth.user">
                       <a class="button is-primary">
                           <strong>My Profile</strong>
                       </a></nuxt-link>
