@@ -24,7 +24,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -36,25 +36,28 @@ module.exports = {
     }
   },
   modules: [
-	  '@nuxtjs/axios',
+    '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/sentry',
     'nuxt-buefy',
     "@nuxtjs/google-analytics"
   ],
+  env:{
+    dsn: process.env.SENTRY_DSN || 'https://b06b99da952e4835905210b62947e6ba@o393970.ingest.sentry.io/5243625'
+  },
   sentry: {
-    dsn: process.env.SENTRY_DSN || 'http://dsn.com',
+    dsn: process.env.dsn,
     config: {}, // Additional config
   },
   axios: {
-	  baseURL: process.env.BASE_URL || 'http://localhost:8000'
+    baseURL: process.env.BASE_URL || 'http://localhost:8000'
   },
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: {url: 'users/login', method: 'post', propertyName: 'access'},
-          user: {url: 'users/', method: 'get', propertyName: 'username'},
+          login: { url: 'users/login', method: 'post', propertyName: 'access' },
+          user: { url: 'users/', method: 'get', propertyName: 'username' },
           logout: false
         },
         // We'll be using cookies once NuxtJS & Django SimpleJWT fully supports them
@@ -81,7 +84,7 @@ module.exports = {
     id: "UA-159838013-1"
   },
   plugins: [
-    {src: "~plugins/ga.js", mode: "client"}
+    { src: "~plugins/ga.js", mode: "client" }
   ]
 }
 
