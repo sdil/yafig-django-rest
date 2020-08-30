@@ -1,14 +1,18 @@
 <template>
   <section class="section">
     <div class="container">
-      <div id="feed">
+      <div class="content" v-if="error != null">
+        <h1>Opsss...</h1>
+        {{ error.message }}
+      </div>
+      <div v-else id="feed">
         <PostBig
           v-for="item in posts"
-          :key="item.id"
-          :id="item.id"
-          :userid="item.posted_by"
-          :img="item.image"
-          :caption="item.caption"
+          :key="item.post.id"
+          :id="item.post.id"
+          :user="item.post.posted_by"
+          :image="item.post.image"
+          :caption="item.post.caption"
         />
       </div>
     </div>
@@ -17,7 +21,6 @@
 
 <script>
 import PostBig from "~/components/PostBig";
-import axios from "axios";
 
 export default {
   middleware: "auth",
@@ -26,18 +29,19 @@ export default {
   },
   created() {
     this.$axios
-      .$get("posts/")
+      .$get("posts/timeline/")
       .then((response) => {
         this.posts = response;
         console.log(this.posts);
       })
-      .catch((e) => {
-        this.errors.push(e);
+      .catch((error) => {
+        this.error = error
       });
   },
   data() {
     return {
       posts: "",
+      error: null,
     };
   },
 };

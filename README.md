@@ -64,7 +64,8 @@ The operations exposed via HTTP REST are:
 
 | Resource | POST | GET | PUT | DELETE |
 |----------|------|-----|-----|--------|
-| /posts   | Upload a new post | Get user's timeline feed | |
+| /posts   | Upload a new post | Get user's posts | |
+| /posts/timline   | | Get user's timeline | |
 | /posts/{id} | | Get post | Update post | Delete post |
 | /posts/user/{user_id} | | Get posts by user | | |
   
@@ -110,6 +111,7 @@ The page will have the following paths:
 6. User CRUD pages at `/u/{id}` path
 7. Profile page at `/u/{own id}` path
 8. Search page at `/search` path
+8. Upload page at `/upload` path
 
 Frontend specs:
 

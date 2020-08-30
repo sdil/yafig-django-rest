@@ -1,7 +1,7 @@
 <template>
   <div class="tile is-4">
       <nuxt-link :to="'/p/' + id">
-            <img :src="img" :alt="'photos by' + userid" width="550"/>
+            <img :src="image" :alt="'photos by' + userId" width="550"/>
       </nuxt-link>
   </div>
 </template>
@@ -9,10 +9,21 @@
 <script>
 export default {
     name: "PostSmall",
-    props: ["id", "img", "userid"]
+    props: ["id", "image", "user"]
 }
 </script>
 
-<style>
+<style scoped>
+
+.tile {
+  justify-content: center;
+}
+
+.tile img {
+  max-height: 400px;
+  width: auto;
+  overflow: hidden;
+  left: 50%;
+}
 
 </style>

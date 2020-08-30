@@ -15,9 +15,9 @@ class Post(models.Model):
     caption = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(blank=True, max_length=120)
-    tags = JSONField(null=True, blank=True)  # <---- Use ArrayField instead!
+    tags = JSONField(null=True, blank=True)
     posted_by = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, blank=True, null=True
+        User, related_name="user", on_delete=models.DO_NOTHING, blank=True, null=True
     )
     image = models.ImageField(upload_to=upload_image_to, null=True, blank=True)
 
@@ -29,3 +29,8 @@ class Comment(models.Model):
     commented_by = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, blank=True, null=True
     )
+
+class Timeline(models.Model):
+    user = models.ForeignKey(User, related_name="owner", on_delete=models.DO_NOTHING)
+    post = models.ForeignKey(Post, related_name="post", on_delete=models.DO_NOTHING)
+    order = models.IntegerField(default=0)

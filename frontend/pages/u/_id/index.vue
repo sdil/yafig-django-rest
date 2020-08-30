@@ -32,15 +32,15 @@
         <h2 class="subtitle">{{ user.description }}</h2>
       </div>
 
-      <div class="tile is-ancestor is-vertical">
-        <div class="tile is-parent" v-for="column in posts" :key="column">
-          <PostSmall
-            v-for="post in column"
-            :id="post.id"
-            :key="post.id"
-            :img="post.image"
-            :userid="post.posted_by"
-          />
+        <div class="tile is-ancestor is-vertical">
+          <div class="tile is-parent" v-for="column in posts" :key="column.index">
+            <PostSmall
+              v-for="post in column"
+              :id="post.id"
+              :key="post.id"
+              :image="post.image"
+              :user="post.posted_by"
+            />
         </div>
       </div>
     </div>
@@ -57,7 +57,6 @@ export default {
       .$get("users/" + this.user_id + "/")
       .then((response) => {
         this.user = response;
-        console.log(this.user);
       })
       .catch((e) => {
         this.errors.push(e);
@@ -67,7 +66,6 @@ export default {
       .$get("users/" + this.user_id + "/posts/")
       .then((response) => {
         this.posts = lodash.chunk(response, 3);
-        console.log(response);
       })
       .catch((e) => {
         this.errors.push(e);
@@ -77,17 +75,22 @@ export default {
     return {
       user_id: this.$route.params.id,
       user: "",
+
       // Use lodash.chunk to split the array into array of multiples of 3s
       // https://dustinpfister.github.io/2017/09/13/lodash-chunk/
+
       posts: [],
     };
   },
-  middleware: "auth",
   components: {
     PostSmall,
   },
 };
 </script>
 
-<style>
+<style scoped>
+.fixed-height {
+  max-height: 10px;
+  color: yellow;
+}
 </style>

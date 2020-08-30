@@ -36,7 +36,7 @@
                         v-for="post in column"
                         :id="post.id"
                         :key="post.id" 
-                        :img="post.img" 
+                        :image="post.image" 
                         :userid="post.userid"
                     />
                 </div>

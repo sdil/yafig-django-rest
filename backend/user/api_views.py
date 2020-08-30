@@ -39,7 +39,7 @@ class UserDetail(APIView):
     Update current user.
     """
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @swagger_auto_schema(
         operation_description="Get user details", responses={200: UserSerializer}
@@ -97,7 +97,7 @@ class UserDetail(APIView):
 
 
 class UserPosts(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @swagger_auto_schema(
         operation_description="Get user's posts",
