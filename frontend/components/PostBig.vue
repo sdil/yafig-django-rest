@@ -2,10 +2,10 @@
   <div class="big-post">
             <b-icon icon="account" size="is-medium"/>
             <nuxt-link :to="'/u/' + userid">  {{ userid }}</nuxt-link><br>
-    Posted 3 hours ago
+    Posted 3 hours ago<br>
     <img :src="img"/>
     <br>
-    Post id {{ id }}
+    {{ caption }}
     <b-taglist>
         <b-tag rounded type="is-white">Nature</b-tag>
         <b-tag rounded type="is-white">Bird</b-tag>
@@ -16,7 +16,7 @@
 <script>
 export default {
     name: "PostBig",
-    props: ["id", "userid", "img", "name"]
+    props: ["id", "userid", "img", "name", "caption"]
 }
 </script>
 

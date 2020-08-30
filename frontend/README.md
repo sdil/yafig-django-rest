@@ -4,7 +4,7 @@
 
 ## Wishlist
 
-- Cookie based JWT store
+- Cookie-based JWT store
 - Refresh token ([Github issue](https://github.com/nuxt-community/auth-module/issues/686))
 
 ## References

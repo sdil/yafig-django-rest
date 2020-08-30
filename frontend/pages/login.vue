@@ -9,9 +9,9 @@
 
           <form method="post" @submit.prevent="login">
             <div class="field">
-              <label class="label">Email</label>
+              <label class="label">Username</label>
               <div class="control">
-                <input type="email" class="input" name="email" v-model="email" required />
+                <input type="username" class="input" name="username" v-model="username" required />
               </div>
             </div>
 
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       error: "",
     };
@@ -56,7 +56,7 @@ export default {
       try {
         await this.$auth.loginWith("local", {
           data: {
-            username: this.email,
+            username: this.username,
             password: this.password,
           },
         });

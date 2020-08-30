@@ -11,8 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "username",
+            "description",
             "status",
             "followers_count",
+            "posts_count",
             "following_count",
             "joined_at",
         )

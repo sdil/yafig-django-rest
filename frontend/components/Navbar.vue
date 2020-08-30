@@ -30,6 +30,10 @@
         <template slot="end" v-if="isAuthenticated">
             <b-navbar-item tag="div">
                 <div class="buttons">
+                    <nuxt-link to="upload">
+                      <a class="button is-light">
+                          New Photo
+                      </a></nuxt-link>
                     <nuxt-link :to="'/u/' + this.$auth.user">
                       <a class="button is-primary">
                           <strong>My Profile</strong>

@@ -12,15 +12,15 @@
             <div class="columns is-mobile">
               <div class="column">
                 <h1 class="title">Posts</h1>
-                <h2 class="subtitle">36</h2>
+                <h2 class="subtitle">{{ user.posts_count }}</h2>
               </div>
               <div class="column">
                 <h1 class="title">Followers</h1>
-                <h2 class="subtitle">36</h2>
+                <h2 class="subtitle">{{ user.followers_count }}</h2>
               </div>
               <div class="column">
                 <h1 class="title">Following</h1>
-                <h2 class="subtitle">36</h2>
+                <h2 class="subtitle">{{ user.following_count }}</h2>
               </div>
             </div>
           </div>
@@ -28,8 +28,8 @@
       </div>
 
       <div>
-        <h2 class="title">{{ $route.params.id }}</h2>
-        <h2 class="subtitle">She's my pride and joy</h2>
+        <h2 class="title">{{ user.username }}</h2>
+        <h2 class="subtitle">{{ user.description }}</h2>
       </div>
 
       <div class="tile is-ancestor is-vertical">
@@ -38,8 +38,8 @@
             v-for="post in column"
             :id="post.id"
             :key="post.id"
-            :img="post.img"
-            :userid="post.userid"
+            :img="post.image"
+            :userid="post.posted_by"
           />
         </div>
       </div>
@@ -52,30 +52,34 @@ import PostSmall from "~/components/PostSmall";
 import lodash from "lodash";
 
 export default {
+  created() {
+    this.$axios
+      .$get("users/" + this.user_id + "/")
+      .then((response) => {
+        this.user = response;
+        console.log(this.user);
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
+
+    this.$axios
+      .$get("users/" + this.user_id + "/posts/")
+      .then((response) => {
+        this.posts = lodash.chunk(response, 3);
+        console.log(response);
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
+  },
   data() {
     return {
+      user_id: this.$route.params.id,
+      user: "",
       // Use lodash.chunk to split the array into array of multiples of 3s
       // https://dustinpfister.github.io/2017/09/13/lodash-chunk/
-      posts: lodash.chunk(
-        [
-          {
-            id: 201,
-            user: "fadhil",
-            img: "https://i.picsum.photos/id/201/1200/500.jpg",
-          },
-          {
-            id: 202,
-            user: "fadhil",
-            img: "https://i.picsum.photos/id/202/1200/500.jpg",
-          },
-          {
-            id: 203,
-            user: "fadhil",
-            img: "https://i.picsum.photos/id/203/1200/500.jpg",
-          },
-        ],
-        3
-      ),
+      posts: [],
     };
   },
   middleware: "auth",

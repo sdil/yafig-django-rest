@@ -77,9 +77,7 @@ class UserDetail(APIView):
                 Schema(
                     type=TYPE_OBJECT,
                     required=["username", "password"],
-                    properties={
-                        "status": Schema(type=TYPE_STRING)
-                    },
+                    properties={"status": Schema(type=TYPE_STRING)},
                 ),
             )
         },
@@ -129,7 +127,8 @@ class CustomObtainTokenPairWithView(TokenObtainPairView):
         type=TYPE_OBJECT,
         required=["username", "password"],
         properties={
-            "username": Schema(type=TYPE_STRING, format=FORMAT_EMAIL),
+            "email": Schema(type=TYPE_STRING, format=FORMAT_EMAIL),
+            "username": Schema(type=TYPE_STRING, format=TYPE_STRING),
             "password": Schema(type=TYPE_STRING, format=FORMAT_PASSWORD),
         },
     ),
@@ -144,7 +143,9 @@ def register(request):
     Register a new user and return it's details
     """
     user = User.objects.create_user(
-        request.data["username"], password=request.data["password"]
+        request.data["username"],
+        email=request.data["email"],
+        password=request.data["password"],
     )
     return Response(UserSerializer(user).data)
 

@@ -8,18 +8,19 @@
           <Notification :message="error" v-if="error" />
 
           <form method="post" @submit.prevent="register">
-            <!-- <div class="field">
-                          <label class='label'>Username</label>
-                          <div class="control">
-                              <input type="text" class="input" name="username" v-model="username" required>
-                          </div>
-            </div>-->
 
             <div class="field">
               <label class="label">Email</label>
               <div class="control">
                 <input type="enauk" class="input" name="email" v-model="email" required />
               </div>
+            </div>
+
+            <div class="field">
+                          <label class='label'>Username</label>
+                          <div class="control">
+                              <input type="text" class="input" name="username" v-model="username" required>
+                          </div>
             </div>
 
             <div class="field">
@@ -64,7 +65,8 @@ export default {
     async register() {
       try {
         await this.$axios.post("users/register/", {
-          username: this.email,
+          email: this.email,
+          username: this.username,
           password: this.password,
         });
         
