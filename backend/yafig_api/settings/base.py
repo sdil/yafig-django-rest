@@ -193,9 +193,13 @@ AWS_QUERYSTRING_AUTH = (
     False  # don't add complex authentication-related query parameters for requests
 )
 AWS_S3_SECURE_URLS = True
-
 AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", "access id")
-AWS_S3_SECRET_ACCESS_KEY = ("AWS_ACCESS_KEY", "secret key")
+AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY", "secret key")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
 AWS_DEFAULT_ACL = None
+
+# Celery
+BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_BROKER_URL = CELERY_RESULT_BACKEND

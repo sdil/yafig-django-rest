@@ -10,10 +10,8 @@ test:
 make-migrations:
 	docker run -it --env-file ./unittest.env -v $(shell pwd):/app --env PORT=8000 -p 8000:8000 registry.heroku.com/yafig-django/web ./manage.py makemigrations --settings=yafig_api.settings.unittest
 
-build:
-	docker build -t registry.heroku.com/yafig-django/web .
-
 build-dockerio:
+	docker build -t registry.heroku.com/yafig-django/web .
 	docker build -t piukul/yafig-monolith .
 
 push-dockerio:
@@ -22,3 +20,6 @@ push-dockerio:
 
 dev:
 	docker-compose up
+
+build:
+	docker-compose build

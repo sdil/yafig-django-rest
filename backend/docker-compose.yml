@@ -7,7 +7,7 @@ services:
     links:
       - postgresql
       - redis
-      - celery
+      - worker
       - elasticsearch
     environment:
       PORT: 8000
@@ -21,6 +21,21 @@ services:
         python manage.py runserver 0.0.0.0:8000 --settings=yafig_api.settings.dev
     volumes:
       - './:/app'
+  worker:
+    build: .
+    links:
+      - postgresql
+      - redis
+      - elasticsearch
+    env_file:
+      - dev.env
+    command:
+      - /bin/bash
+      - '-c'
+      - |
+        celery -A yafig_api worker -l debug
+    volumes:
+      - './:/app'
   postgresql:
     image: postgres
     ports:
@@ -31,7 +46,22 @@ services:
       POSTGRES_DB: yafig
   redis:
     image: redis
-  celery:
-    image: celery
   elasticsearch:
           image: elasticsearch:6.8.10
+  flower:
+    build: .
+    ports:
+      - 5555:5555
+    links:
+      - postgresql
+      - redis
+      - elasticsearch
+    env_file:
+      - dev.env
+    command:
+      - /bin/bash
+      - '-c'
+      - |
+        celery flower -A yafig_api worker -l debug --address=0.0.0.0 --port=5555
+    volumes:
+      - './:/app'

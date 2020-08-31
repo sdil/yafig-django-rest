@@ -51,7 +51,7 @@ These resources design is influenced by [Microsoft API Design guidance](https://
 | /users/register | Create a new user. This will send an welcome email to the new user. | | | |
 | /users/login | Login the user and return a JWT token | | | |
 | /users/{username} | | Get user details | Update user | Delete user |
-| /users/{username}/posts | | Get user's posts | | |
+| /users/{username}/posts/ | | Get user's posts | | |
 | /users/follow/{username} | | Creates a new record in `relationship` table and update `follow_count` of that user | | |
 | /users/block/{username} | | Creates a new record in `relationship` table and remove blocked user posts from timeline table | | |
 
@@ -64,10 +64,10 @@ The operations exposed via HTTP REST are:
 
 | Resource | POST | GET | PUT | DELETE |
 |----------|------|-----|-----|--------|
-| /posts   | Upload a new post | Get user's posts | |
-| /posts/timline   | | Get user's timeline | |
-| /posts/{id} | | Get post | Update post | Delete post |
-| /posts/user/{user_id} | | Get posts by user | | |
+| /posts/  | Upload a new post | Get user's posts | |
+| /posts/timeline/   | | Get user's timeline | |
+| /posts/{id}/ | | Get post | Update post | Delete post |
+| /posts/user/{user_id}/ | | Get posts by user | | |
   
 - After posting a new picture, it will generate a thumbnail and index the new post in Elasticsearch
 - Deleting a post will delete the post's comment
@@ -79,7 +79,7 @@ The HTTP REST operations are:
 | Resource | POST | GET | PUT | DELETE |
 |----------|------|-----|-----|--------|
 | /posts/{post_id}/comments/ | Create a new comment | Get post's comments | | |
-| /posts/{post_id}/comments/{comment_id} | | Get a comment | Edit post comment | Delete comment
+| /posts/{post_id}/comments/{comment_id}/ | | Get a comment | Edit post comment | Delete comment
 
 #### Search Resource
 
@@ -192,6 +192,7 @@ External services used:
 - [Upload files to S3 using DRF](https://stackoverflow.com/questions/46195181/upload-file-to-s3-using-drf)
 - [Soft Deletion in Django](https://adriennedomingus.com/blog/soft-deletion-in-django)
 - [Building a Full-Text Search App Using Django, Docker and Elasticsearch](https://dev.to/aymanemx/building-a-full-text-search-app-using-django-docker-and-elasticsearch-3bai)
+- [Build Elasticsearch autocomplete feature for Django app](https://itnext.io/elasticsearch-autocomplete-for-django-9dffef1d3afb)
 
 NuxtJS / Vuejs
 

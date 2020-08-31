@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-
+from .tasks import generate_thumbnail, publish_post_to_timelines
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,6 @@ class PostListCreateAPIView(ListCreateAPIView):
     parser_classes = (MultiPartParser,)
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    # @method_decorator(cache_page(60*60*2))
     def get_queryset(self):
         """
         This view should return a list of all the posts
@@ -57,9 +56,13 @@ class PostListCreateAPIView(ListCreateAPIView):
         self.request.user.posts_count += 1
         self.request.user.save()
 
+        # Generate thumbnail
+        generate_thumbnail.delay()
+
         # Index the image in elasticsearch
 
         # Asynchronously add this image to all his/her followers timeline
+        publish_post_to_timelines.delay()
 
 
 class PostRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -81,4 +84,5 @@ class CommentListCreateAPIView(ListCreateAPIView):
     """
 
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Comment.objects.all()
