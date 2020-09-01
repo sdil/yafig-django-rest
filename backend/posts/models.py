@@ -31,6 +31,8 @@ class Comment(models.Model):
     )
 
 class Timeline(models.Model):
+    # The order is by primary key because it's auto increment
+    # This is not scalable
     user = models.ForeignKey(User, related_name="owner", on_delete=models.DO_NOTHING)
     post = models.ForeignKey(Post, related_name="post", on_delete=models.DO_NOTHING)
     order = models.IntegerField(default=0)

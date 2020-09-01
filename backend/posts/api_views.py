@@ -26,7 +26,7 @@ class TimelineList(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return get_list_or_404(Timeline.objects.order_by("-order"), user=user)
+        return Timeline.objects.filter(user=user).order_by("-id")
 
 
 class PostListCreateAPIView(ListCreateAPIView):
@@ -50,7 +50,7 @@ class PostListCreateAPIView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         # Assign the owner of the image to the current user
-        serializer.save(posted_by=self.request.user)
+        post = serializer.save(posted_by=self.request.user)
 
         # Increase the posts count of the image owner
         self.request.user.posts_count += 1
@@ -62,7 +62,7 @@ class PostListCreateAPIView(ListCreateAPIView):
         # Index the image in elasticsearch
 
         # Asynchronously add this image to all his/her followers timeline
-        publish_post_to_timelines.delay()
+        publish_post_to_timelines.delay(self.request.user.id, post.id)
 
 
 class PostRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

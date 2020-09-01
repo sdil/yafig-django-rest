@@ -8,3 +8,13 @@ class User(AbstractUser):
     posts_count= models.IntegerField(default=0)
     following_count = models.IntegerField(default=0)
     joined_at = models.DateTimeField(auto_now=True)
+
+class Relationship(models.Model):
+    FRIEND = "Friend"
+    BLOCKED = "Blocked"
+    RELATIONSHIP_TYPE = [(FRIEND, "Friend"), (BLOCKED, "Blocked")]
+
+    user1 = models.ForeignKey(User, related_name="actor", on_delete=models.DO_NOTHING)
+    user2 = models.ForeignKey(User, related_name="target", on_delete=models.DO_NOTHING)
+    type = models.CharField(max_length=128, choices=RELATIONSHIP_TYPE, default=FRIEND)
+    created_at = models.DateTimeField(auto_now=True)
