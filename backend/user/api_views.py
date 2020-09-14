@@ -105,7 +105,7 @@ class UserPosts(APIView):
     )
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
-        posts = get_list_or_404(Post, posted_by=user)
+        posts = get_list_or_404(Post, created_by=user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 

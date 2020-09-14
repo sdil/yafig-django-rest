@@ -5,7 +5,8 @@ WORKDIR /app
 RUN pip install django djangorestframework drf-yasg psycopg2-binary \
     dj-database-url djangorestframework-simplejwt pyyaml \ 
     Pillow django-cors-headers sentry-sdk django-storages coreapi boto3 \
-    whitenoise gunicorn Celery redis celery[redis] flower
+    whitenoise gunicorn Celery redis celery[redis] flower django-elasticsearch-dsl-drf \
+    django-environ
 
 COPY . .
 

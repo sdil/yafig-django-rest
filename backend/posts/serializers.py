@@ -8,11 +8,11 @@ logger = logging.getLogger(__name__)
 
 
 class PostSerializer(serializers.ModelSerializer):
-    posted_by = UserSerializer(read_only=True)
+    created_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ["id", "image", "caption", "posted_by"]
+        fields = ["id", "image", "caption", "created_by"]
 
 
 class CommentSerializer(serializers.ModelSerializer):

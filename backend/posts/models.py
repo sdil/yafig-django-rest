@@ -13,21 +13,30 @@ def upload_image_to(instance, filename):
 
 class Post(models.Model):
     caption = models.TextField()
-    posted_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(blank=True, max_length=120)
     tags = JSONField(null=True, blank=True)
-    posted_by = models.ForeignKey(
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
         User, related_name="user", on_delete=models.DO_NOTHING, blank=True, null=True
     )
-    image = models.ImageField(upload_to=upload_image_to, null=True, blank=True)
+    image = models.ImageField(upload_to=upload_image_to)
+
+    @property
+    def tags_indexing(self):
+        """
+        Tags for indexing.
+
+        Used in Elasticsearch indexing.
+        """
+        return [tag for tag in self.tags]
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.DO_NOTHING, blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
     comment = models.TextField()
-    commented_at = models.DateTimeField(auto_now_add=True)
-    commented_by = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, blank=True, null=True
+    created_by = models.DateTimeField(auto_now_add=True)
+    created_at = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING
     )
 
 class Timeline(models.Model):

@@ -193,6 +193,7 @@ External services used:
 - [Soft Deletion in Django](https://adriennedomingus.com/blog/soft-deletion-in-django)
 - [Building a Full-Text Search App Using Django, Docker and Elasticsearch](https://dev.to/aymanemx/building-a-full-text-search-app-using-django-docker-and-elasticsearch-3bai)
 - [Build Elasticsearch autocomplete feature for Django app](https://itnext.io/elasticsearch-autocomplete-for-django-9dffef1d3afb)
+- [Build Elasticsearch with Django](https://medium.com/@s.lyapustin/django-polls-app-with-elasticsearch-ffc02b9e79d9)
 
 NuxtJS / Vuejs
 

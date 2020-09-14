@@ -7,7 +7,7 @@
         {{ error.message }}
       </div>
       <div v-else>
-        <PostBig :id="post.id" :image="post.image" :user="post.posted_by" />
+        <PostBig :id="post.id" :image="post.image" :user="post.created_by" />
       </div>
     </div>
   </section>

@@ -39,7 +39,7 @@
               :id="post.id"
               :key="post.id"
               :image="post.image"
-              :user="post.posted_by"
+              :user="post.created_by"
             />
         </div>
       </div>

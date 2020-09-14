@@ -14,6 +14,7 @@ import os
 from datetime import timedelta
 
 from django.urls import reverse_lazy
+import environ
 
 import dj_database_url
 import sentry_sdk
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
     "posts.apps.PostsConfig",
     "corsheaders",
     "storages",
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf",
 ]
 
 MIDDLEWARE = [
@@ -74,6 +77,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 30,
+    "ORDERING_PARAM": "ordering",
 }
 
 SIMPLE_JWT = {
@@ -203,3 +209,12 @@ AWS_DEFAULT_ACL = None
 BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
 CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 CELERY_BROKER_URL = CELERY_RESULT_BACKEND
+
+ELASTICSEARCH_DSL = {
+    "default": {"hosts": "elasticsearch:9200"},
+}
+
+# Name of the Elasticsearch index
+ELASTICSEARCH_INDEX_NAMES = {
+    'search_indexes.documents.post': 'post',
+}

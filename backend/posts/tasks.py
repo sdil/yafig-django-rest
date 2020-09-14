@@ -10,10 +10,10 @@ def generate_thumbnail():
     logger.info("Generating thumbnail")
 
 @app.task
-def publish_post_to_timelines(posted_by, post_id):
+def publish_post_to_timelines(created_by, post_id):
     logger.info("Publishing post to owner")
 
-    user = User.objects.get(pk=posted_by)
+    user = User.objects.get(pk=created_by)
     post = Post.objects.get(pk=post_id)
     Timeline.objects.create(user=user, post=post)
 

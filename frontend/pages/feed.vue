@@ -10,7 +10,7 @@
           v-for="item in posts"
           :key="item.post.id"
           :id="item.post.id"
-          :user="item.post.posted_by"
+          :user="item.post.created_by"
           :image="item.post.image"
           :caption="item.post.caption"
         />
