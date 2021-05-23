@@ -2,7 +2,7 @@
 
 ![YAFIG Logo](logo.png)
 
-**Status: Under heavy development**
+**Status: Not in development at the moment**
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9166b573-1cee-48eb-89e4-c9b60a47c938/deploy-status)](https://app.netlify.com/sites/yafig/deploys)
 
